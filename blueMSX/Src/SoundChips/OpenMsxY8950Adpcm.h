@@ -8,7 +8,6 @@
 
 using namespace std;
 
-
 typedef unsigned long  EmuTime;
 typedef unsigned char  byte;
 typedef unsigned short word;

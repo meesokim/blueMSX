@@ -1174,7 +1174,7 @@ static BOOL CALLBACK shortcutsProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM l
             
 //            inputReset(hDlg);
             baseHwnd = hDlg;
-            baseHotkeyCtrlProc = (WNDPROC)SetWindowLong(GetDlgItem(hDlg, IDC_SCUTHOTKEY), GWL_WNDPROC, (LONG)hotkeyCtrlProc);
+            baseHotkeyCtrlProc = (WNDPROC)SetWindowLong(GetDlgItem(hDlg, IDC_SCUTHOTKEY), GWLP_WNDPROC, (LONG)hotkeyCtrlProc);
             SendDlgItemMessage(hDlg, IDC_SCUTHOTKEY, WM_INITIALIZE, 0, 0);
 
             currIndex = -1;

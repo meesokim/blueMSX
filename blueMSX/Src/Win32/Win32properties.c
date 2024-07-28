@@ -48,16 +48,16 @@ static HRESULT StringCchLength(LPCTSTR s, size_t m, size_t *l) { *l = strlen(s);
 #endif
 
 #include "Win32Properties.h"
-#include "Win32DirectX.h"
+#include "Win32directx.h"
 #include "ThemeLoader.h"
 #include "Win32keyboard.h"
-#include "resource.h"
+#include "Resource.h"
 #include "Language.h"
 #include "Machine.h"
 #include "Board.h"
 #include "Win32Midi.h"
 #include "Win32Cdrom.h"
-#include "Win32File.h"
+#include "Win32file.h"
 
 
 #define WM_UPDATEPROPERTIES  (WM_USER + 0)

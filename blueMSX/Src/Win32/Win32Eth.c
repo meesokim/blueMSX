@@ -30,7 +30,7 @@
 #include "Language.h"
 
 #include "Packet32.h"
-#include "NtDDNdis.h"
+#include "ntddndis.h"
 
 #include <stdio.h>
 

@@ -201,7 +201,7 @@ static void initDikStr()
     INIT_DIK(PERIOD);
     INIT_DIK(PLAYPAUSE);
     INIT_DIK(POWER);
-    INIT_DIK(PREVTRACK);
+    // INIT_DIK(PREVTRACK);
     INIT_DIK(PRIOR);
     INIT_DIK(Q);
     INIT_DIK(R);

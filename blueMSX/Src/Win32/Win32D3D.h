@@ -10,7 +10,7 @@ extern "C" {
 #include "VideoRender.h"
 #include "Properties.h"
 #include "VDP.h"
-#include "Win32Keyboard.h"
+#include "Win32keyboard.h"
 
 void D3DExitFullscreenMode();
 int D3DEnterFullscreenMode(HWND hwnd, int useVideoBackBuffer, int useSysMemBuffering);

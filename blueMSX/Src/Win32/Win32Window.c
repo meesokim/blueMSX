@@ -30,8 +30,8 @@
 #include <windows.h>
 #include "MsxTypes.h"
 #include "Win32Common.h"
-#include "Win32Keyboard.h"
-#include "Win32File.h"
+#include "Win32keyboard.h"
+#include "Win32file.h"
 #include "Win32Menu.h"
 #include "Theme.h"
 #include "Machine.h"
@@ -835,11 +835,11 @@ static BOOL CALLBACK dropdownProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lP
             int idx = SendDlgItemMessage(hwnd, IDC_CONTROL, CB_GETCURSEL, 0, 0);
             int rv = SendDlgItemMessage(hwnd, IDC_CONTROL, CB_GETLBTEXT, idx, (LPARAM)buffer);
             if (rv != CB_ERR) {
-                SetWindowLong(hwnd, DWL_MSGRESULT, (LRESULT)buffer);
+                SetWindowLong(hwnd, DWLP_MSGRESULT, (LRESULT)buffer);
                 return TRUE;
             }
         }
-        SetWindowLong(hwnd, DWL_MSGRESULT, 0);
+        SetWindowLong(hwnd, DWLP_MSGRESULT, 0);
         return TRUE;
 
     case WM_OBJECT_UPDATE:

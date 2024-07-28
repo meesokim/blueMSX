@@ -10,7 +10,7 @@
 #
 # Comment out if verbose comilation is wanted
 #
-SILENT = @
+SILENT = @ 
 
 #
 # Directories
@@ -21,10 +21,10 @@ OUTPUT_DIR = objs
 #
 # Tools
 #
-CC    = $(SILENT)gcc
-CXX   = $(SILENT)g++
-RC    = $(SILENT)windres -O COFF
-LD    = $(SILENT)g++ 
+CC    = $(PREFIX)gcc
+CXX   = $(PREFIX)g++
+RC    = $(PREFIX)windres -O COFF
+LD    = $(PREFIX)g++ 
 RM    = $(SILENT)-rm -f
 RMDIR = $(SILENT)-rm -rf
 MKDIR = $(SILENT)-mkdir
@@ -33,14 +33,14 @@ ECHO  = @echo
 #
 # Flags
 #
-CFLAGS   = -g -w -O2 -D_MBCS -D__WINCRYPT_H__ -DWIN32 -D_WINDOWS -DWINDOWS -DLSB_FIRST -DNARROW -DSOUND -DDISK -DFMSX -DNO_ASM -D_WIN32_IE=0x0500 -DPROPERTIES_DEFAULTS_ALT_1 -DPROPERTIES_NO_REGISTRY -DPROPERTIES_LOCAL_INI_FILE -DMINGW
+CFLAGS   = -g -w -O2 -std=c++14 -fpermissive -D_MBCS -D__WINCRYPT_H__ -DWIN32 -D_WINDOWS -DWINDOWS -DLSB_FIRST -DNARROW -DSOUND -DDISK -DFMSX -DNO_ASM -D_WIN32_IE=0x0500 -DPROPERTIES_DEFAULTS_ALT_1 -DPROPERTIES_NO_REGISTRY -DPROPERTIES_LOCAL_INI_FILE -DMINGW
 # Optimization sample
 #CFLAGS   = -w -O2 -march=pentium3 -mmmx -msse -mfpmath=sse -DNDEBUG -D_MBCS -D__WINCRYPT_H__ -DWIN32 -D_WINDOWS -DWINDOWS -DLSB_FIRST -DNARROW -DSOUND -DDISK -DFMSX -D_WIN32_IE=0x0500 -DPROPERTIES_DEFAULTS_ALT_1 -DPROPERTIES_NO_REGISTRY -DPROPERTIES_LOCAL_INI_FILE -fomit-frame-pointer -finline-functions -fforce-addr -fforce-mem -funroll-loops
 CPPFLAGS = $(CFLAGS)
 RCFLAGS  =
 LDFLAGS  = -static -Wl,--subsystem,windows
 TARGET   = blueMSX.exe
-LIBS     = -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -lshlwapi -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -ldxguid -lwinmm -lComCtl32 -lddraw -ldsound -ldinput -lmsvcrt -lvfw32 -ld3d9 -ld3dx9
+LIBS     = -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -lshlwapi -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -ldxguid -lwinmm -lcomctl32 -lddraw -ldsound -ldinput -lmsvcrt -lvfw32 -ld3d9 -ld3dx9
 
 SRCS        = $(SOURCE_FILES)
 OBJS        = $(patsubst %.rc,%.res,$(patsubst %.cxx,%.o,$(patsubst %.cpp,%.o,$(patsubst %.cc,%.o,$(patsubst %.c,%.o,$(filter %.c %.cc %.cpp %.cxx %.rc,$(SRCS)))))))
@@ -395,7 +395,7 @@ SOURCE_FILES += Ymdeltat.c
 SOURCE_FILES += ym2151.c
 
 SOURCE_FILES += Actions.c 
-SOURCE_FILES += Appconfig.c 
+SOURCE_FILES += AppConfig.c 
 SOURCE_FILES += CommandLine.c 
 SOURCE_FILES += Emulator.c 
 #SOURCE_FILES += Keyboard.c

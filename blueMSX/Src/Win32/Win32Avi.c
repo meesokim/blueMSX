@@ -26,7 +26,7 @@
 ******************************************************************************
 */
 #include "Win32Avi.h"
-#include <Vfw.h>
+#include <vfw.h>
 #include "Actions.h"
 #include "Board.h"
 #include "Win32Sound.h"

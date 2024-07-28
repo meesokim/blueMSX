@@ -54,7 +54,7 @@ class CMSXGr
 #include <string.h>
 #include <stdio.h>
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #else
 #define GlobalAlloc(xxx, addr) malloc(addr)
 #define GlobalFree(addr) free(addr)

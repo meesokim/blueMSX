@@ -32,7 +32,7 @@
 #include <direct.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <CommCtrl.h>
+#include <commctrl.h>
 #include <shlobj.h> 
 #include <shlwapi.h>
 #include <dbt.h>
@@ -45,7 +45,7 @@
 #include "VideoRender.h"
 #include "CommandLine.h"
 #include "Language.h"   
-#include "resource.h"
+#include "Resource.h"
 #include "Casette.h"
 #include "PrinterIO.h"
 #include "UartIO.h"

@@ -10,7 +10,7 @@ using namespace std;
 
 
 typedef unsigned long  EmuTime;
-typedef unsigned char  byte;
+typedef unsigned char  _byte;
 typedef unsigned short word;
 
 extern "C" {
@@ -53,8 +53,8 @@ public:
     virtual ~OpenYM2413Base() {}
 		
 	virtual void reset(const EmuTime &time) = 0;
-	virtual void writeReg(byte r, byte v, const EmuTime &time) = 0;
-	virtual byte peekReg(byte r) = 0;
+	virtual void writeReg(_byte r, _byte v, const EmuTime &time) = 0;
+	virtual _byte peekReg(_byte r) = 0;
 	
 	virtual int* updateBuffer(int length) = 0;
 	virtual void setSampleRate(int sampleRate, int Oversampling) = 0;
@@ -132,21 +132,21 @@ class OpenYM2413_2 : public OpenYM2413Base
 {
 	struct Patch {
 		Patch();
-		Patch(int n, const byte* data);
+		Patch(int n, const _byte* data);
 		
 		bool AM;
         bool PM;
         bool EG;
-		byte KR; // 0-1
-		byte ML; // 0-15
-		byte KL; // 0-3
-		byte TL; // 0-63
-		byte FB; // 0-7
-		byte WF; // 0-1
-		byte AR; // 0-15
-		byte DR; // 0-15
-		byte SL; // 0-15
-		byte RR; // 0-15
+		_byte KR; // 0-1
+		_byte ML; // 0-15
+		_byte KL; // 0-3
+		_byte TL; // 0-63
+		_byte FB; // 0-7
+		_byte WF; // 0-1
+		_byte AR; // 0-15
+		_byte DR; // 0-15
+		_byte SL; // 0-15
+		_byte RR; // 0-15
 	};
 	
 	class Slot {
@@ -230,8 +230,8 @@ public:
 	virtual ~OpenYM2413_2();
 
 	virtual void reset(const EmuTime& time);
-	virtual void writeReg(byte reg, byte value, const EmuTime& time);
-    virtual byte peekReg(byte r) { return reg[r]; }
+	virtual void writeReg(_byte reg, _byte value, const EmuTime& time);
+    virtual _byte peekReg(_byte r) { return reg[r]; }
 
 	// SoundDevice
 	virtual const std::string& getName() const;
@@ -283,15 +283,15 @@ private:
 	// Debuggable
 	virtual unsigned getSize() const;
 	//virtual const std::string& getDescription() const;  // also in SoundDevice!!
-	virtual byte read(unsigned address);
-	virtual void write(unsigned address, byte value);
+	virtual _byte read(unsigned address);
+	virtual void write(unsigned address, _byte value);
 
     int filter(int input);
 private:
 	int maxVolume;
 
 	// Register
-	byte reg[0x40];
+	_byte reg[0x40];
 
 	// Pitch Modulator
 	unsigned int pm_phase;

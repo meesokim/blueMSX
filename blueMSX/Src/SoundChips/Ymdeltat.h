@@ -28,7 +28,7 @@ typedef struct deltat_adpcm_state {
 	UINT8 reg[16];
 	UINT8 portstate,portcontrol;
 	int portshift;
-	int memread; /* first two bytes of mem->cpu transfer are dummy */
+	int memread; /* first two _bytes of mem->cpu transfer are dummy */
 
 	UINT8 flag;          /* port state         */
 	UINT8 eos;           /* end of sample flag */

@@ -9,7 +9,7 @@
 using namespace std;
 
 typedef unsigned long  EmuTime;
-typedef unsigned char  byte;
+typedef unsigned char  _byte;
 typedef unsigned short word;
 typedef unsigned __int64 uint64;
 class Y8950;
@@ -23,8 +23,8 @@ public:
 	void reset(const EmuTime& time);
 	void setSampleRate(int sr);
 	bool muted();
-	void writeReg(byte rg, byte data, const EmuTime& time);
-	byte readReg(byte rg);
+	void writeReg(_byte rg, _byte data, const EmuTime& time);
+	_byte readReg(_byte rg);
 	int calcSample();
     
     void pushTime(const EmuTime &time);
@@ -36,8 +36,8 @@ private:
 	// Debuggable
 	virtual unsigned getSize() const;
 	virtual const string& getDescription() const;
-	virtual byte read(unsigned address);
-	virtual void write(unsigned address, byte value);
+	virtual _byte read(unsigned address);
+	virtual void write(unsigned address, _byte value);
 	
 	// Schedulable
 	virtual void executeUntil(const EmuTime& time, int userData);
@@ -60,7 +60,7 @@ private:
 	int addrMask;
 	int memPntr;
 	bool romBank;
-	byte* ramBank;
+	_byte* ramBank;
 	
 	bool playing;
 	int volume;
@@ -76,8 +76,8 @@ private:
     uint64  sysTime;
     uint64  syncTime;
 	
-	byte reg7;
-	byte reg15;
+	_byte reg7;
+	_byte reg15;
 };
 
 

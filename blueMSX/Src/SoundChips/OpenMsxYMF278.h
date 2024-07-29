@@ -10,7 +10,7 @@ using namespace std;
 
 
 typedef unsigned long  EmuTime;
-typedef unsigned char  byte;
+typedef unsigned char  _byte;
 typedef unsigned short word;
 
 
@@ -80,12 +80,12 @@ class YMF278Slot
 		short sample1, sample2;
 
 		bool active;		// slot keyed on
-		byte bits;		// width of the samples
+		_byte bits;		// width of the samples
 		int startaddr;
 		int loopaddr;
 		int endaddr;
 
-		byte state;
+		_byte state;
 		int env_vol;
 		unsigned int env_vol_step;
 		unsigned int env_vol_lim;
@@ -105,11 +105,11 @@ class YMF278 : public SoundDevice
 		       const EmuTime &time);
 		virtual ~YMF278();
 		void reset(const EmuTime &time);
-		void writeRegOPL4(byte reg, byte data, const EmuTime &time);
-		byte peekRegOPL4(byte reg, const EmuTime &time);
-		byte readRegOPL4(byte reg, const EmuTime &time);
-		byte peekStatus(const EmuTime &time);
-		byte readStatus(const EmuTime &time);
+		void writeRegOPL4(_byte reg, _byte data, const EmuTime &time);
+		_byte peekRegOPL4(_byte reg, const EmuTime &time);
+		_byte readRegOPL4(_byte reg, const EmuTime &time);
+		_byte peekStatus(const EmuTime &time);
+		_byte readStatus(const EmuTime &time);
         void* getRom() { return rom; }	
         void* getRam() { return ram; }	
         int getRomSize() { return endRom; }
@@ -122,8 +122,8 @@ class YMF278 : public SoundDevice
         void saveState();
 	
 	private:
-		byte readMem(unsigned int address);
-		void writeMem(unsigned int address, byte value);
+		_byte readMem(unsigned int address);
+		void writeMem(unsigned int address, _byte value);
 		short getSample(YMF278Slot &op);
 		void advance();
 		void checkMute();
@@ -131,8 +131,8 @@ class YMF278 : public SoundDevice
 		void keyOnHelper(YMF278Slot& slot);
 
 		int buffer[AUDIO_STEREO_BUFFER_SIZE];
-		byte* rom;
-		byte* ram;
+		_byte* rom;
+		_byte* ram;
 
         int oplOversampling;
 		DoubleT freqbase;
@@ -160,7 +160,7 @@ class YMF278 : public SoundDevice
 		// enveloppe and pan levels
 		int volume[256 * 4];
 
-		byte regs[256];
+		_byte regs[256];
 
 		unsigned long LD_Time;
 		unsigned long BUSY_Time;

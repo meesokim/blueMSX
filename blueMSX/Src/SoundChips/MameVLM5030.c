@@ -270,7 +270,7 @@ static int parse_frame (struct vlm5030_info *chip)
 	for(i=0;i<=9;i++)
 		chip->old_k[i] = chip->new_k[i];
 
-	/* command byte check */
+	/* command _byte check */
 	cmd = chip->rom[chip->address&chip->address_mask];
 	if( cmd & 0x01 )
 	{	/* extend frame */

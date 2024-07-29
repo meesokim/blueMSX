@@ -21,9 +21,9 @@ X11_LIBDIR= /usr/X11R6/lib
 #
 # Tools
 #
-CC    = $(SILENT)gcc
-CXX   = $(SILENT)g++
-LD    = $(SILENT)g++ 
+CC    = $(PREFIX)gcc
+CXX   = $(PREFIX)g++
+LD    = $(PREFIX)g++ 
 RM    = $(SILENT)-rm -f
 RMDIR = $(SILENT)-rm -rf
 MKDIR = $(SILENT)-mkdir

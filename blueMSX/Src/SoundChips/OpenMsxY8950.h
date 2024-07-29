@@ -15,13 +15,13 @@ extern "C" {
 class TimerCallback
 {
 	public:
-		virtual void callback(byte value) = 0;
+		virtual void callback(_byte value) = 0;
 };
 
 extern void msxaudioTimerSet(int timer, int count);
-extern void msxaudioTimerStart(int timer, int start, byte ref);
+extern void msxaudioTimerStart(int timer, int start, _byte ref);
 
-template<int freq, byte flag>
+template<int freq, _byte flag>
 class MsxAudioTimer
 {
 	public:
@@ -29,7 +29,7 @@ class MsxAudioTimer
             id = 12500 / freq;
         }
 		virtual ~MsxAudioTimer() {}
-		void setValue(byte value) {
+		void setValue(_byte value) {
             msxaudioTimerSet(id, id * (256 - value));
         }
 		void setStart(bool start, const EmuTime &time) {
@@ -142,15 +142,15 @@ class Y8950 : public SoundDevice, public TimerCallback
 		void reset();
 
 		bool AM, PM, EG;
-		byte KR; // 0-1
-		byte ML; // 0-15
-		byte KL; // 0-3
-		byte TL; // 0-63
-		byte FB; // 0-7
-		byte AR; // 0-15
-		byte DR; // 0-15
-		byte SL; // 0-15
-		byte RR; // 0-15
+		_byte KR; // 0-1
+		_byte ML; // 0-15
+		_byte KL; // 0-3
+		_byte TL; // 0-63
+		_byte FB; // 0-7
+		_byte AR; // 0-15
+		_byte DR; // 0-15
+		_byte SL; // 0-15
+		_byte RR; // 0-15
 	};
 
 	class Slot {
@@ -265,14 +265,14 @@ public:
 	virtual ~Y8950();
 
 	void reset(const EmuTime &time);
-	void writeReg(byte reg, byte data, const EmuTime &time);
-	byte readReg(byte reg, const EmuTime &time);
-	byte readStatus();
+	void writeReg(_byte reg, _byte data, const EmuTime &time);
+	_byte readReg(_byte reg, const EmuTime &time);
+	_byte readStatus();
     
 	virtual void setSampleRate(int sampleRate, int Oversampling);
 	virtual int* updateBuffer(int length);
     
-	virtual void callback(byte flag);
+	virtual void callback(_byte flag);
     void pushTime(const EmuTime &time);
 
     void loadState();
@@ -287,8 +287,8 @@ private:
 	// Debuggable
 	virtual unsigned getSize() const;
 	//virtual const string& getDescription() const;  // also in SoundDevice!!
-	virtual byte read(unsigned address);
-	virtual void write(unsigned address, byte value);
+	virtual _byte read(unsigned address);
+	virtual void write(unsigned address, _byte value);
 	
 	// Definition of envelope mode
 	enum { ATTACK,DECAY,SUSHOLD,SUSTINE,RELEASE,FINISH };
@@ -324,16 +324,16 @@ private:
 	void checkMute();
 	bool checkMuteHelper();
 
-	void setStatus(byte flags);
-	void resetStatus(byte flags);
-	void changeStatusMask(byte newMask);
+	void setStatus(_byte flags);
+	void resetStatus(_byte flags);
+	void changeStatusMask(_byte newMask);
 
     int buffer[AUDIO_MONO_BUFFER_SIZE];
 
 	int adr;
 	int output[2];
 	// Register
-	byte reg[0x100];
+	_byte reg[0x100];
 	bool rythm_mode;
 	// Pitch Modulator
 	int pm_mode;
@@ -395,9 +395,9 @@ private:
 	static const int STATUS_T1      = R04_MASK_T1;
 
 	/** STATUS Register. */
-	byte status;
+	_byte status;
 	/** bit=0 -> masked. */
-	byte statusMask;
+	_byte statusMask;
 	MsxAudioIRQHelper irq;
 
 	// Timers

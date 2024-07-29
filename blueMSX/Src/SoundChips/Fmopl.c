@@ -48,7 +48,7 @@ extern int  y8950GetNoteOn(void* ref, int row);
 /* --------------------	quality	selection ---------------------	*/
 
 /* sinwave entries */
-/* used	static memory =	SIN_ENT	* 4	(byte) */
+/* used	static memory =	SIN_ENT	* 4	(_byte) */
 #define	SIN_ENT	2048
 
 /* output level	entries	(envelope,sinwave) */
@@ -56,8 +56,8 @@ extern int  y8950GetNoteOn(void* ref, int row);
 #define	ENV_BITS 16
 /* envelope	output entries */
 #define	EG_ENT	 4096
-/* used	dynamic	memory = EG_ENT*4*4(byte)or	EG_ENT*6*4(byte) */
-/* used	static	memory = EG_ENT*4 (byte)					 */
+/* used	dynamic	memory = EG_ENT*4*4(_byte)or	EG_ENT*6*4(_byte) */
+/* used	static	memory = EG_ENT*4 (_byte)					 */
 
 #define	EG_OFF	 ((2*EG_ENT)<<ENV_BITS)	 /*	OFF			 */
 #define	EG_DED	 EG_OFF

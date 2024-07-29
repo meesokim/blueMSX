@@ -10,7 +10,7 @@ using namespace std;
 
 
 typedef unsigned long  EmuTime;
-typedef unsigned char  byte;
+typedef unsigned char  _byte;
 typedef unsigned short word;
 
 extern "C" {
@@ -53,8 +53,8 @@ public:
     virtual ~OpenYM2413Base() {}
 		
 	virtual void reset(const EmuTime &time) = 0;
-	virtual void writeReg(byte r, byte v, const EmuTime &time) = 0;
-    virtual byte peekReg(byte r) = 0;
+	virtual void writeReg(_byte r, _byte v, const EmuTime &time) = 0;
+    virtual _byte peekReg(_byte r) = 0;
 	
 	virtual int* updateBuffer(int length) = 0;
 	virtual void setSampleRate(int sampleRate, int Oversampling) = 0;
@@ -70,48 +70,48 @@ class Slot
 	public:
 		Slot();
 
-		inline int volume_calc(byte LFO_AM);
-		inline void KEY_ON (byte key_set);
-		inline void KEY_OFF(byte key_clr);
+		inline int volume_calc(_byte LFO_AM);
+		inline void KEY_ON (_byte key_set);
+		inline void KEY_OFF(_byte key_clr);
 
-		byte ar;	// attack rate: AR<<2
-		byte dr;	// decay rate:  DR<<2
-		byte rr;	// release rate:RR<<2
-		byte KSR;	// key scale rate
-		byte ksl;	// keyscale level
-		byte ksr;	// key scale rate: kcode>>KSR
-		byte mul;	// multiple: mul_tab[ML]
+		_byte ar;	// attack rate: AR<<2
+		_byte dr;	// decay rate:  DR<<2
+		_byte rr;	// release rate:RR<<2
+		_byte KSR;	// key scale rate
+		_byte ksl;	// keyscale level
+		_byte ksr;	// key scale rate: kcode>>KSR
+		_byte mul;	// multiple: mul_tab[ML]
 
 		// Phase Generator
 		int phase;	// frequency counter
 		int freq;	// frequency counter step
-		byte fb_shift;	// feedback shift value
+		_byte fb_shift;	// feedback shift value
 		int op1_out[2];	// slot1 output for feedback
 
 		// Envelope Generator
-		byte eg_type;	// percussive/nonpercussive mode
-		byte state;	// phase type
+		_byte eg_type;	// percussive/nonpercussive mode
+		_byte state;	// phase type
 		int TL;		// total level: TL << 2
 		int TLL;	// adjusted now TL
 		int volume;	// envelope counter
 		int sl;		// sustain level: sl_tab[SL]
 
-		byte eg_sh_dp;	// (dump state)
-		byte eg_sel_dp;	// (dump state)
-		byte eg_sh_ar;	// (attack state)
-		byte eg_sel_ar;	// (attack state)
-		byte eg_sh_dr;	// (decay state)
-		byte eg_sel_dr;	// (decay state)
-		byte eg_sh_rr;	// (release state for non-perc.)
-		byte eg_sel_rr;	// (release state for non-perc.)
-		byte eg_sh_rs;	// (release state for perc.mode)
-		byte eg_sel_rs;	// (release state for perc.mode)
+		_byte eg_sh_dp;	// (dump state)
+		_byte eg_sel_dp;	// (dump state)
+		_byte eg_sh_ar;	// (attack state)
+		_byte eg_sel_ar;	// (attack state)
+		_byte eg_sh_dr;	// (decay state)
+		_byte eg_sel_dr;	// (decay state)
+		_byte eg_sh_rr;	// (release state for non-perc.)
+		_byte eg_sel_rr;	// (release state for non-perc.)
+		_byte eg_sh_rs;	// (release state for perc.mode)
+		_byte eg_sel_rs;	// (release state for perc.mode)
 
-		byte key;	// 0 = KEY OFF, >0 = KEY ON
+		_byte key;	// 0 = KEY OFF, >0 = KEY ON
 
 		// LFO
-		byte AMmask;	// LFO Amplitude Modulation enable mask
-		byte vib;	// LFO Phase Modulation enable flag (active high)
+		_byte AMmask;	// LFO Amplitude Modulation enable mask
+		_byte vib;	// LFO Phase Modulation enable flag (active high)
 
 		int wavetable;	// waveform select
 };
@@ -120,7 +120,7 @@ class Channel
 {
 	public:
 		Channel();
-		inline int chan_calc(byte LFO_AM);
+		inline int chan_calc(_byte LFO_AM);
 		inline void CALC_FCSLOT(Slot *slot);
 
 		Slot slots[2];
@@ -128,8 +128,8 @@ class Channel
 		int block_fnum;	// block+fnum
 		int fc;		// Freq. freqement base
 		int ksl_base;	// KeyScaleLevel Base step
-		byte kcode;	// key code (for key scaling)
-		byte sus;	// sus on/off (release speed in percussive mode)
+		_byte kcode;	// key code (for key scaling)
+		_byte sus;	// sus on/off (release speed in percussive mode)
 };
 
 class OpenYM2413 : public OpenYM2413Base
@@ -139,8 +139,8 @@ class OpenYM2413 : public OpenYM2413Base
 		virtual ~OpenYM2413();
 		
 		virtual void reset(const EmuTime &time);
-		virtual void writeReg(byte r, byte v, const EmuTime &time);
-        virtual byte peekReg(byte r) { return regs[r]; }
+		virtual void writeReg(_byte r, _byte v, const EmuTime &time);
+        virtual _byte peekReg(_byte r) { return regs[r]; }
 		
 		virtual void setInternalVolume(short newVolume);
 		virtual int* updateBuffer(int length);
@@ -160,13 +160,13 @@ class OpenYM2413 : public OpenYM2413Base
 		inline void advance();
 		inline int rhythm_calc(bool noise);
 
-		inline void set_mul(byte slot, byte v);
-		inline void set_ksl_tl(byte chan, byte v);
-		inline void set_ksl_wave_fb(byte chan, byte v);
-		inline void set_ar_dr(byte slot, byte v);
-		inline void set_sl_rr(byte slot, byte v);
-		void load_instrument(byte chan, byte slot, byte* inst);
-		void update_instrument_zero(byte r);
+		inline void set_mul(_byte slot, _byte v);
+		inline void set_ksl_tl(_byte chan, _byte v);
+		inline void set_ksl_wave_fb(_byte chan, _byte v);
+		inline void set_ar_dr(_byte slot, _byte v);
+		inline void set_sl_rr(_byte slot, _byte v);
+		void load_instrument(_byte chan, _byte slot, _byte* inst);
+		void update_instrument_zero(_byte r);
 		void setRhythmMode(bool newMode);
 
         int buffer[AUDIO_MONO_BUFFER_SIZE];
@@ -174,10 +174,10 @@ class OpenYM2413 : public OpenYM2413Base
 
         int in[5];
 
-        byte regs[0x40];
+        _byte regs[0x40];
 
 		Channel channels[9];	// OPLL chips have 9 channels
-		byte instvol_r[9];		// instrument/volume (or volume/volume in percussive mode)
+		_byte instvol_r[9];		// instrument/volume (or volume/volume in percussive mode)
 
         short maxVolume;
 
@@ -202,12 +202,12 @@ class OpenYM2413 : public OpenYM2413Base
 		//   1-15  - fixed instruments
 		//   16    - bass drum settings
 		//   17-18 - other percussion instruments
-		byte inst_tab[19][8];
+		_byte inst_tab[19][8];
 
 		int fn_tab[1024];		// fnumber->increment counter
 
-		byte LFO_AM;
-		byte LFO_PM;
+		_byte LFO_AM;
+		_byte LFO_PM;
 };
 
 #endif

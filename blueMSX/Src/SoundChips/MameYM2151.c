@@ -495,7 +495,7 @@ static void init_tables(void)
 		logerror("\n");
 	#endif
 	}
-	/*logerror("TL_TAB_LEN = %i (%i bytes)\n",TL_TAB_LEN, (int)sizeof(tl_tab));*/
+	/*logerror("TL_TAB_LEN = %i (%i _bytes)\n",TL_TAB_LEN, (int)sizeof(tl_tab));*/
 	/*logerror("ENV_QUIET= %i\n",ENV_QUIET );*/
 
 

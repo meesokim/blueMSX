@@ -14,7 +14,7 @@ SILENT = @
 # Directories
 #
 ROOT_DIR   = ../../..
-OUTPUT_DIR = objs
+OUTPUT_DIR = $(PREFIX)objs
 
 X11_LIBDIR= /usr/X11R6/lib
 

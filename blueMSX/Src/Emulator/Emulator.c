@@ -432,7 +432,7 @@ void emulatorStart(const char* stateName) {
     properties->emulation.pauseSwitch = 0;
     switchSetPause(properties->emulation.pauseSwitch);
 
-    machine = machineCreate(properties->emulation.machineName);
+    machine = (void *) machineCreate(properties->emulation.machineName);
 
     if (machine == NULL) {
         archShowStartEmuFailDialog();
@@ -450,7 +450,7 @@ void emulatorStart(const char* stateName) {
 #endif
     emuStartEvent = archEventCreate(0);
 #ifndef WII
-    emuTimer = archCreateTimer(emulatorGetSyncPeriod(), timerCallback);
+    emuTimer = (void *)archCreateTimer(emulatorGetSyncPeriod(), timerCallback);
 #endif
 #endif
 

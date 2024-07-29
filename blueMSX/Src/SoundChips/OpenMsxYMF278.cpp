@@ -144,7 +144,7 @@ const int vib_depth[8] = {
 
 
 #define SC(db) (unsigned int) (db * (2.0 / ENV_STEP))
-const int am_depth[8] = {
+const unsigned int am_depth[8] = {
 	SC(0),	   SC(1.781), SC(2.906), SC(3.656),
 	SC(4.406), SC(5.906), SC(7.406), SC(11.91)
 };

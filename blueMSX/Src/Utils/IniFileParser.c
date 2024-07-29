@@ -207,7 +207,7 @@ IniFile *iniFileOpen(const char *filename)
     if (iniFile != NULL)
     {
         iniFile->isZipped = 0;
-        iniFile->isZipped = NULL;
+        iniFile->isZipped = (int)NULL;
         
         iniFile->modified = 0;
         

@@ -432,7 +432,7 @@ static int readMachine(Machine* machine, const char* machineName, const char* fi
             sprintf(machine->slotInfo[i].inZipName, "%s%s",
                     iniFilePath, slotFilename);
         }
-        
+    
 #ifdef __APPLE__
         // On OS X, replace all backslashes with slashes
         for (char *ch = machine->slotInfo[i].name; *ch; ch++)

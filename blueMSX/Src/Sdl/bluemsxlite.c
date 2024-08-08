@@ -25,8 +25,13 @@
 **
 ******************************************************************************
 */
-#ifndef __APPLE__
-#define ENABLE_OPENGL
+// #ifndef __APPLE__ || __ENSCRIPTEN__
+// #define ENABLE_OPENGL
+// #endif
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#include <emscripten/html5.h>
 #endif
 
 #include <stdlib.h>
@@ -510,6 +515,29 @@ static void handleEvent(SDL_Event* event)
     }
 }
 
+static bool display_size_changed = false;  // custom global flag
+static EM_BOOL on_web_display_size_changed( int event_type, 
+  const EmscriptenUiEvent *event, void *user_data )
+{
+    display_size_changed = true;
+    printf("on_web_display_size_changed\n");
+    return 0;
+}
+
+void main_loop()
+{
+    SDL_Event event;
+    SDL_WaitEvent(&event);
+    do {
+        if( event.type == SDL_QUIT ) {
+            doQuit = 1;
+        }
+        else {
+            handleEvent(&event);
+        }
+    } while(SDL_PollEvent(&event));    
+}
+
 int main(int argc, char **argv)
 {
     SDL_Event event;
@@ -540,17 +568,15 @@ int main(int argc, char **argv)
     fprintf(stdout,"DEBUG - bluemsxlite.c setDefaultPaths uses %s\n",strcat(archGetCurrentDirectory(),"/Machines"));
 
     //PATCH: Missing the current directory variable:
-    //machineSetDirectory(archGetCurrentDirectory());
+    machineSetDirectory(archGetCurrentDirectory());
     
-
     resetProperties = emuCheckResetArgument(szLine);
     strcat(path, archGetCurrentDirectory());
-    strcat(path, DIR_SEPARATOR "bluemsx.ini");
-
+    strcat(path, DIR_SEPARATOR "Machines/bluemsx.ini");
 
     fprintf(stdout,"DEBUG - bluemsxlite.c path as %s\n",path);
     properties = propCreate(resetProperties, 0, P_KBD_EUROPEAN, 0, "");
-    
+
     properties->emulation.syncMethod = P_EMU_SYNCFRAMES;    
 //    properties->emulation.syncMethod = P_EMU_SYNCTOVBLANKASYNC;
 
@@ -558,13 +584,14 @@ int main(int argc, char **argv)
         propDestroy(properties);
         return 0;
     }
-    
+
     video = videoCreate();
     videoSetColors(video, properties->video.saturation, properties->video.brightness, 
                   properties->video.contrast, properties->video.gamma);
     videoSetScanLines(video, properties->video.scanlinesEnable, properties->video.scanlinesPct);
     videoSetColorSaturation(video, properties->video.colorSaturationEnable, properties->video.colorSaturationWidth);
-    
+
+
     bitDepth = 32;
     if (!createSdlWindow()) {
         return 0;
@@ -575,12 +602,14 @@ int main(int argc, char **argv)
     keyboardInit();
 
     mixer = mixerCreate();
-    
+
     emulatorInit(properties, mixer);
     actionInit(video, properties, mixer);
+
     langInit();
     tapeSetReadOnly(properties->cassette.readOnly);
-    
+
+
     langSetLanguage(properties->language);
     
     joystickPortSetType(0, properties->joy1.typeId);
@@ -592,6 +621,7 @@ int main(int argc, char **argv)
     midiIoSetMidiOutType(properties->sound.MidiOut.type, properties->sound.MidiOut.fileName);
     midiIoSetMidiInType(properties->sound.MidiIn.type, properties->sound.MidiIn.fileName);
     ykIoSetMidiInType(properties->sound.YkIn.type, properties->sound.YkIn.fileName);
+
 
     emulatorRestartSound();
 
@@ -632,23 +662,33 @@ int main(int argc, char **argv)
             machineDestroy(machine);
         }
     }
+    printf("boardSetFdcTimingEnable - before\n");
     boardSetFdcTimingEnable(properties->emulation.enableFdcTiming);
     boardSetY8950Enable(properties->sound.chip.enableY8950);
     boardSetYm2413Enable(properties->sound.chip.enableYM2413);
     boardSetMoonsoundEnable(properties->sound.chip.enableMoonsound);
     boardSetVideoAutodetect(properties->video.detectActiveMonitor);
+    printf("boardSetVideoAutodetect - After\n");
 
     i = emuTryStartWithArguments(properties, szLine, NULL);
     if (i < 0) {
         printf("Failed to parse command line\n");
         return 0;
     }
+    printf("emuTryStartWithArguments - After\n");
     
-    if (i == 0) {
-        emulatorStart(NULL);
-    }
-
-    //While the user hasn't quit
+    // if (i == 0) {
+    //     emulatorStart(NULL);
+    // }
+    printf("emulatorStart - After\n");
+#ifdef __EMSCRIPTEN__    
+    emscripten_set_resize_callback(
+        EMSCRIPTEN_EVENT_TARGET_WINDOW,
+        0, 0, on_web_display_size_changed
+    );
+    emscripten_set_main_loop(main_loop, 30, 1);
+#else
+    // cpu.set_breakpoint(0x27);
     while(!doQuit) {
         SDL_WaitEvent(&event);
         do {
@@ -660,6 +700,7 @@ int main(int argc, char **argv)
             }
         } while(SDL_PollEvent(&event));
     }
+#endif
 
 	// For stop threads before destroy.
 	// Clean up.

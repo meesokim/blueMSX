@@ -252,7 +252,7 @@ int videoRender(Video* pVideo, FrameBuffer* frame, int bitDepth, int zoom,
 
 Video* videoCreate()
 {
-    Video* pVideo = (Video*)calloc(1, sizeof(Video));
+    Video* pVideo = (Video*)malloc(sizeof(Video), 1);
 
     pVideo->deInterlace = 0;
 
@@ -316,6 +316,7 @@ static void initRGBTable(Video* pVideo)
 
     generateGammaTable(pVideo);
 
+    return;
     for (rgb = 0; rgb < MAX_RGB_COLORS; rgb++) {
         int R = 8 * ((rgb >> 10) & 0x01f);
         int G = 8 * ((rgb >> 5) & 0x01f);
@@ -2309,8 +2310,8 @@ Video* videoCreate()
 
     initRGBTable(pVideo);
 
-    hq2x_init();
-    hq3x_init();
+    // hq2x_init();
+    // hq3x_init();
 
     pVideo->palMode = VIDEO_PAL_FAST;
     pVideo->pRgbTable16 = pRgbTableColor16;

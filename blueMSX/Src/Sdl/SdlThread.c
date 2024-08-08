@@ -55,7 +55,7 @@ void  archThreadDestroy(void* thread)
 {
     SDL_Thread* sdlThread = (SDL_Thread*)thread;
 
-    SDL_KillThread(sdlThread);
+    SDL_WaitThread(sdlThread, NULL);
 }
 
 void archThreadSleep(int milliseconds) 
